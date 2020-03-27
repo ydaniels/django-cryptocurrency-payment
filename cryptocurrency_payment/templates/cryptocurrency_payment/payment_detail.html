@@ -1,0 +1,173 @@
+<style>
+.abf-frame p {
+	font-family: Helvetica!important;
+	line-height: 18px;
+	margin: 0!important;
+	padding: 0!important
+}
+.abf-frame {
+	color: #000!important;
+	background-color: #fff!important;
+	position: absolute;
+	top: calc(50% - 245px);
+	left: calc(50% - 180px);
+	font-family: Helvetica!important;
+	width: 360px;
+	max-height: 600px;
+	margin-top: 0;
+	text-align: left;
+	box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+	border-radius: 3px;
+	font-size: 12px
+}
+.abf-frame a {
+	font-family: Helvetica!important;
+	color: #6A8FC2!important
+}
+.abf-frame a:hover {
+	color: #676573!important
+}
+.abf-form {
+	padding: 0 24px 24px
+}
+.abf-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px 24px;
+	min-height: 93px
+}
+.abf-header div:nth-child(1) img {
+	display: inline-block;
+	margin: 5px 0
+}
+.abf-ash1 {
+	text-align: center;
+	font-size: 14px;
+	margin: 12px 0
+}
+.abf-ash2 {
+	font-size: 14px;
+	text-align: center;
+	margin: 12px 0;
+	font-weight: 700
+}
+.abf-topline {
+	border-top: 1px solid #dedede!important;
+	padding-top: 12px
+}
+.abf-list-item {
+	padding: 4px 0;
+	display: flex;
+	align-items: baseline
+}
+.abf-label {
+	display: inline-block;
+	width: 45%;
+	padding-right: 24px;
+	box-sizing: border-box;
+	vertical-align: top;
+	font-size: 12px;
+	opacity: .5;
+	text-align: right
+}
+.abf-value {
+	display: inline-block;
+	width: 48%;
+	box-sizing: border-box
+}
+.abf-confirmations {
+	display: inline-block;
+	background-color: #dc3545!important;
+	width: 12px;
+	height: 12px;
+	font-size: 9px;
+	line-height: 12px;
+	text-align: center;
+	color: #fff!important;
+	border-radius: 50%;
+	margin-left: 3px
+}
+.abf-green {
+	background-color: #28a745!important
+}
+.abf-img-height {
+	max-height: 80px
+}
+
+</style>
+<div class="abf-frame">
+  <div class="abf-header">
+    <div>
+      <div class="abf-ash1"><img src="https://bitcoinsymbol.org/i/old-bitcoin-logo.svg" width="50" alt=""></div>
+    </div>
+    <div style="text-align: center; background-color:#fff;"><span class="abf-qr"> <img class="abf-img-height" src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=bitcoin:{{payment.address}}?&amount={{payment.crypto_amount}}" style="display: inline;" alt="QR code for payment"> </span> </div>
+  </div>
+  <div class="abf-form">
+    <div class="abf-ash1"> Please send <strong><span class="abf-totalbtc">{{payment.crypto_amount}}</span></strong> {{payment.crypto_code}}
+      to address: </div>
+    <div class="abf-address abf-topline abf-ash2 abf-input-address"><a href="bitcoin:{{payment.address}}?&amount={{payment.crypto_amount}}"> {{payment.address}}</a></div>
+    <div class="abf-data abf-topline">
+      <div class="abf-list">
+         {% if payment.payment_title %}
+              <div class="abf-list-item">
+          <div class="abf-label">Title</div>
+          <div class="abf-value">{{payment.payment_title}}</div>
+        </div>
+        {% endif %}
+         {% if payment.payment_description %}
+          <div class="abf-list-item">
+          <div class="abf-label">Description</div>
+          <div class="abf-value">{{payment.payment_description}}</div>
+        </div>
+        {% endif %}
+
+
+        <div class="abf-list-item">
+          <div class="abf-label">Amount to pay:</div>
+          <div class="abf-value"><span class="abf-totalbtc">{{payment.crypto_amount}}</span> {{payment.crypto_code}}</div>
+        </div>
+        <div class="abf-list-item">
+          <div class="abf-label">Arrived amount:</div>
+          <div class="abf-value"><span class="abf-arrived">{{payment.paid_crypto_amount}}</span> {{payment.crypto_code}}</div>
+        </div>
+        <div class="abf-list-item">
+          <div class="abf-label">Remains to pay:</div>
+          <div class="abf-value"><b><span class="abf-remains">{{payment.remaining_crypto_amount}}</span> {{payment.crypto_code}}</b>
+           <br />
+          {% if payment.child_payment %}
+               <div><a href="{% url 'cryptocurrency_payment:crypto_payment_detail' pk=payment.child_payment.pk %}" target="_blank">Click Here To Pay</a></div>
+          {% endif %}
+          </div>
+
+        </div>
+        <div class="abf-list-item">
+          <div class="abf-label">Date:</div>
+          <div class="abf-value">{{payment.created_at}}</div>
+        </div>
+            {% if payment.payment.tx_hash %}
+                 <div class="abf-list-item abf-tx-block">
+          <div class="abf-label">Transaction(s):</div>
+          <div class="abf-value abf-tx">
+            <div><a href="https://live.blockcypher.com/btc/tx/{{payment.tx_hash}}/" target="_blank">{{payment.tx_hash | truncatechars:25}}</a>
+
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="abf-list-item">
+          <div class="abf-label">Status:</div>
+          <div class="abf-value"><b><span class="abf-status">{{payment.status | title}}</span></b>
+           <br />
+           {% if payment.parent_payment %}
+        <div>  <a href="{% url 'cryptocurrency_payment:crypto_payment_detail' pk=payment.parent_payment.pk %}"> Initial Payment </a></div>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+# Config file for automatic testing at travis-ci.org
+
+language: python
+
+python:
+  - "3.6"
+
+env:
+  matrix:
+  - TOX_ENV=py38-django-2.0
+  - TOX_ENV=py37-django-2.0
+  - TOX_ENV=py36-django-2.0
+  - TOX_ENV=py35-django-2.0
+  - TOX_ENV=py27-django-2.0
+  - TOX_ENV=py38-django-2.1
+  - TOX_ENV=py37-django-2.1
+  - TOX_ENV=py36-django-2.1
+  - TOX_ENV=py35-django-2.1
+  - TOX_ENV=py27-django-2.1
+  - TOX_ENV=py38-django-2.2
+  - TOX_ENV=py37-django-2.2
+  - TOX_ENV=py36-django-2.2
+  - TOX_ENV=py35-django-2.2
+  - TOX_ENV=py27-django-2.2
+  - TOX_ENV=py38-django-3.0
+  - TOX_ENV=py37-django-3.0
+  - TOX_ENV=py36-django-3.0
+  - TOX_ENV=py35-django-3.0
+  - TOX_ENV=py27-django-3.0
+
+matrix:
+  fast_finish: true
+
+# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+install: pip install -r requirements_test.txt
+
+# command to run tests using coverage, e.g. python setup.py test
+script: tox -e $TOX_ENV
+
+after_success:
+  - codecov -e TOX_ENV
+
+deploy:
+  provider: pypi
+  user: ydaniels
+  password:
+    secure: T/rMIDj+8d/qF5AOYxG+7Q4+XcYpmFPieCHTIS/vNueECsIHu9sHyf+JePQqMw6iJ46uKT0w5zG+92nDPrn4WDK7+Vqmz7dBZExhJUuYNgyMnsExOmxej0iqEBxP+QgaffSkPCnhKztm4uu6C3j3wlX/6XavgCNNE/nAcrpoEz9DJ9vBGIwSGN3rBL7JywfKQFBeGo9J2wuHT2gZZVaSTN3/Sb6+rqtKSoNI+AeH20/tSGZXfs5eqwev/Q5pMuNrF7s9A8FST7ZGnUwEK7pTOUVSJuVUONbN+B2YXsOnSI57sk6GIc5Fg4oWNweuo9MoPYVNHFWXydZbYHQfJA/K2/VgDXTkb+q2UBLNiaRjS1STuuKcUgYIE64FUIACaddj0X8M+fMCE7UBXKeY/b2cNkQUvML5jp0mrVfRm3zhyzikCUzWKakdOssD1OpAWkYo5oDHiU14TeMRQGsYjxIIkuhCybDcHEaqyFiQIpc+WQuBOdODg7haXpcpbSciVTodi6nhUX3sK7Mf/6D3gcB0piM+JpwKWFqCLxJJC2xKmMVRI3C6rTFrcNgrQzlY1TrrUTC9lao7oqWbEJB3nkdBhNU47D+pwcY/jh/Rhv9qpwoTUh4LcLfJ63x7m61wFeyNYqtIDzESMJSfoR8nUYei4u9yntmS9QXYO6XvjoMAhJ4=
+  on:
+    tags: true
