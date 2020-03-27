@@ -6,6 +6,14 @@ python:
 - '3.7'
 - '3.8'
 - '2.7'
+before_install:
+  - apt-get autoremove sqlite3
+  - apt-get install python-software-properties
+  - apt-add-repository -y ppa:travis-ci/sqlite3
+  - apt-get -y update
+  - apt-cache show sqlite3
+  - apt-get install sqlite3=3.7.15.1-1~travis1
+  - sqlite3 -version
 env:
   matrix:
   - TOX_ENV=py37-django1.11
