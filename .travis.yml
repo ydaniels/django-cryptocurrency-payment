@@ -8,26 +8,27 @@ python:
 - '2.7'
 env:
   matrix:
+  - TOX_ENV=py38-django1.11
+  - TOX_ENV=py37-django1.11
+  - TOX_ENV=py36-django1.11
+  - TOX_ENV=py35-django1.11
+  - TOX_ENV=py27-django1.11
   - TOX_ENV=py38-django2.0
   - TOX_ENV=py37-django2.0
   - TOX_ENV=py36-django2.0
   - TOX_ENV=py35-django2.0
-  - TOX_ENV=py27-django2.0
   - TOX_ENV=py38-django2.1
   - TOX_ENV=py37-django2.1
   - TOX_ENV=py36-django2.1
   - TOX_ENV=py35-django2.1
-  - TOX_ENV=py27-django2.1
   - TOX_ENV=py38-django2.2
   - TOX_ENV=py37-django2.2
   - TOX_ENV=py36-django2.2
   - TOX_ENV=py35-django2.2
-  - TOX_ENV=py27-django2.2
   - TOX_ENV=py38-django3.0
   - TOX_ENV=py37-django3.0
   - TOX_ENV=py36-django3.0
-  - TOX_ENV=py35-django3.0
-  - TOX_ENV=py27-django3.0
+
 
 matrix:
   fast_finish: true
