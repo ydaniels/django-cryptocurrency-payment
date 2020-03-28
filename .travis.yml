@@ -6,11 +6,7 @@ python:
 - '3.7'
 - '3.8'
 - '2.7'
-before_install:
-  - sudo apt-get autoremove sqlite3
-  - sudo apt-cache show sqlite3
-  - sudo apt-get install sqlite3==2.5.1
-  - sudo sqlite3 -version
+
 env:
   matrix:
   - TOX_ENV=py37-django1.11

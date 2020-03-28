@@ -48,4 +48,3 @@ output/*/index.html
 docs/_build
 /venv/
 /db.sqlite3
-/manage.py
