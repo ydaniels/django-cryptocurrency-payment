@@ -40,6 +40,24 @@ Add it to your `INSTALLED_APPS`:
         ...
     )
 
+    CRYPTOCURRENCY_PAYMENT = {
+        "BITCOIN": {
+            "CODE": "btc",
+            "BACKEND": "merchant_wallet.backends.btc.BitcoinBackend",
+            "FEE": 0.00,
+            "REFRESH_PRICE_AFTER_MINUTE": 15,
+            "REUSE_ADDRESS": False,
+            "ACTIVE": True,
+            "MASTER_PUBLIC_KEY": 'PUT_YOUR_WALLET_MASTER_PUBLIC_KEY',
+            "CANCEL_UNPAID_PAYMENT_HRS": 24,
+            "CREATE_NEW_UNDERPAID_PAYMENT": True,
+            "IGNORE_UNDERPAYMENT_AMOUNT": 10,
+            "IGNORE_CONFIRMED_BALANCE_WITHOUT_SAVED_HASH_MINS": 20,
+            "BALANCE_CONFIRMATION_NUM": 1,
+            "ALLOW_ANONYMOUS_PAYMENT": True,
+        }
+     }
+
 Add Django Cryptocurrency Payment's URL patterns:
 
 .. code-block:: python
@@ -49,9 +67,29 @@ Add Django Cryptocurrency Payment's URL patterns:
 
     urlpatterns = [
         ...
-        url(r'^', include(cryptocurrency_payment_urls)),
+        url(r'^', include(cryptocurrency_payment_urls)), #/payment/{pk}/
         ...
     ]
+
+
+Create payment with method
+
+.. code-block:: python
+
+    from cryptocurrency_payment.models import create_new_payment
+
+    payment = create_new_payment(
+    crypto='BITCOIN', #Cryptocurrency from your settings
+    fiat_amount=10, #Amount of item in fiat
+    fiat_currency='USD', #Fiat currency used to convert to crypto amount
+    payment_title=None,  #Title associated with payment
+    payment_description=None, #Description associated with payment
+    related_object=None, #Generic linked object for this payment -> crypto_payments = GenericRelation(CryptoCurrencyPayment)
+    user=None, #User of this payment for non-anonymous payment
+    parent_payment=None, #uhh duh
+    address_index=None,# Use a particular address index for this payment
+    reuse_address=None), #Used previously paid address for this payment
+
 
 Features
 --------
