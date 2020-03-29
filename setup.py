@@ -56,7 +56,7 @@ setup(
         'cryptocurrency_payment',
     ],
     include_package_data=True,
-    install_requires=[],
+    install_requires=["merchant-wallet"],
     license="MIT",
     zip_safe=False,
     keywords='django-cryptocurrency-payment',

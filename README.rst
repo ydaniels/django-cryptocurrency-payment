@@ -11,6 +11,11 @@ Django Cryptocurrency Payment
 .. image:: https://codecov.io/gh/ydaniels/django-cryptocurrency-payment/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/ydaniels/django-cryptocurrency-payment
 
+.. image:: https://img.shields.io/badge/python-2.7%7C3.5%7C3.6%7C3.7%7C3.8-blue
+   :alt: PyPI - Python Version
+.. image:: https://img.shields.io/badge/django-1.11%7C2.0%7C2.1%7C2.2%7C3.0-blue
+   :alt: Django Version
+
 Simple and flexible pluggable cryptocurrency payment app for django
 
 Documentation
