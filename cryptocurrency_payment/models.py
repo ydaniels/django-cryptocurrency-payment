@@ -62,6 +62,7 @@ def create_new_payment(
     )
     crypto_code = get_backend_config(crypto, key="CODE")
     backend_obj = get_backend_obj(crypto)
+
     crypto_amount = backend_obj.convert_from_fiat(fiat_amount, fiat_currency)
     address = None
     resuse_address = False
@@ -70,6 +71,7 @@ def create_new_payment(
         related_object_id = related_object.pk
     if parent_payment:
         address = parent_payment.address
+        resuse_address = True
     if not address and crypto_reuse_address is True:
         address = CryptoCurrencyPayment.get_crypto_reused_address(crypto)
         resuse_address = address is not None
@@ -93,6 +95,8 @@ def create_new_payment(
         content_object=related_object,
         parent_payment=parent_payment,
     )
+    if fiat_amount == 0:
+        payment.status = CryptoCurrencyPayment.PAYMENT_PAID
     payment.save()
     return payment
 
