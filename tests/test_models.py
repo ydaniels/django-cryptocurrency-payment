@@ -121,5 +121,9 @@ class TestCryptocurrencyModel(TestCase):
         self.assertIn(child_payment.pk, inv_pks)
         self.assertIn(payment.pk, inv_pks)
 
+    def test_payment_paid_when_fiat_is_zero(self):
+        payment = create_new_payment(self.crypto, 0, "USD")
+        self.assertEqual(payment.status, CryptoCurrencyPayment.PAYMENT_PAID)
+
     def tearDown(self):
         pass
