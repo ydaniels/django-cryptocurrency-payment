@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
-from app_settings import get_backend_config, get_backend_obj
+from cryptocurrency_payment.app_settings import get_backend_config, get_backend_obj
 
 
 def create_child_payment(payment, fiat_amount):
