@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.views.generic import DetailView
 from django.http import Http404
-from .models import CryptoCurrencyPayment
-from app_settings import get_backend_config
+from cryptocurrency_payment.models import CryptoCurrencyPayment
+from cryptocurrency_payment.app_settings import get_backend_config
 
 
 class CryptoPaymentDetailView(DetailView):
