@@ -102,12 +102,12 @@
     <div>
       <div class="abf-ash1"><img src="https://bitcoinsymbol.org/i/old-bitcoin-logo.svg" width="50" alt=""></div>
     </div>
-    <div style="text-align: center; background-color:#fff;"><span class="abf-qr"> <img class="abf-img-height" src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=bitcoin:{{payment.address}}?&amount={{payment.crypto_amount}}" style="display: inline;" alt="QR code for payment"> </span> </div>
+    <div style="text-align: center; background-color:#fff;"><span class="abf-qr"> <img class="abf-img-height" src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=bitcoin:{{payment.address}}?amount={{payment.crypto_amount}}&label={{payment.payment_title}}&message={{payment.payment_description}}" style="display: inline;" alt="QR code for payment"> </span> </div>
   </div>
   <div class="abf-form">
     <div class="abf-ash1"> Please send <strong><span class="abf-totalbtc">{{payment.crypto_amount}}</span></strong> {{payment.crypto_code}}
       to address: </div>
-    <div class="abf-address abf-topline abf-ash2 abf-input-address"><a href="bitcoin:{{payment.address}}?&amount={{payment.crypto_amount}}"> {{payment.address}}</a></div>
+    <div class="abf-address abf-topline abf-ash2 abf-input-address"><a href="bitcoin:{{payment.address}}?amount={{payment.crypto_amount}}&label={{payment.payment_title}}&message={{payment.payment_description}}"> {{payment.address}}</a></div>
     <div class="abf-data abf-topline">
       <div class="abf-list">
          {% if payment.payment_title %}
@@ -159,7 +159,11 @@
 
         <div class="abf-list-item">
           <div class="abf-label">Status:</div>
-          <div class="abf-value"><b><span class="abf-status">{{payment.status | title}}</span></b>
+          <div class="abf-value"><b><span class="abf-status">{{payment.status | title}}</span>
+          {% if payment.status != 'paid' or  payment.status != 'cancelled'  %}
+            <br /><small style="color:blue">Confirmation may take 10m-20m</small>
+            {% endif %}
+          </b>
            <br />
            {% if payment.parent_payment %}
         <div>  <a href="{% url 'cryptocurrency_payment:crypto_payment_detail' pk=payment.parent_payment.pk %}"> Initial Payment </a></div>

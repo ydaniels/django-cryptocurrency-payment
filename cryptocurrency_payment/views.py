@@ -14,8 +14,6 @@ class CryptoPaymentDetailView(DetailView):
 
         obj = super(CryptoPaymentDetailView, self).get_object( *args )
         allow_anon_payment = get_backend_config(obj.crypto, key='ALLOW_ANONYMOUS_PAYMENT')
-        if  allow_anon_payment is not True and   self.request.user.is_authenticated is not True:
-            raise Http404
-        elif   obj.user and self.request.user != obj.user:
+        if  allow_anon_payment is not True and  obj.user and self.request.user != obj.user:
             raise Http404
         return obj
