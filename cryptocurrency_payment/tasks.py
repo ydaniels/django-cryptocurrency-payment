@@ -1,9 +1,8 @@
-import importlib
-from .models import CryptoCurrencyPayment
+from cryptocurrency_payment.models import CryptoCurrencyPayment
 from django.utils import timezone
-from .models import create_child_payment
-from datetime import datetime, timedelta
-from app_settings import get_active_backends, get_backend_config, get_backend_obj
+from cryptocurrency_payment.models import create_child_payment
+from datetime import timedelta
+from cryptocurrency_payment.app_settings import get_active_backends, get_backend_config, get_backend_obj
 
 
 def update_payment_status():
