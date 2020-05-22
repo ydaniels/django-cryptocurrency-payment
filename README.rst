@@ -16,7 +16,7 @@ Django Cryptocurrency Payment
 .. image:: https://img.shields.io/badge/django-1.11%7C2.0%7C2.1%7C2.2%7C3.0-blue
    :alt: Django Version
 
-Simple and flexible pluggable cryptocurrency payment app for django
+Simple and flexible pluggable cryptocurrency payment app for django. Coins are spendable and reflect on HD wallet like Electrum
 
 Documentation
 -------------
@@ -86,10 +86,19 @@ Create payment with method
     payment_description=None, #Description associated with payment
     related_object=None, #Generic linked object for this payment -> crypto_payments = GenericRelation(CryptoCurrencyPayment)
     user=None, #User of this payment for non-anonymous payment
-    parent_payment=None, #uhh duh
-    address_index=None,# Use a particular address index for this payment
+    parent_payment=None, #Associate with previous payment
+    address_index=None,# Use an address generated from a particular index for this payment e.g same address can always be used for a particular user
     reuse_address=None), #Used previously paid address for this payment
 
+Tasks
+--------
+Run these tasks periodically based on your preferred time using your favorite django task manager
+
+.. code-block:: python
+
+ cryptocurrency_payment.tasks.update_payment_status
+ cryptocurrency_payment.tasks.cancel_unpaid_payment
+ cryptocurrency_payment.tasks.refresh_payment_prices
 
 Features
 --------
