@@ -7,7 +7,7 @@ python:
 - '3.6'
 - '3.7'
 - '3.8'
-
+- '3.9'
 
 
 
@@ -30,6 +30,7 @@ env:
   - TOX_ENV=py36-django3.0
   - TOX_ENV=py37-django3.0
   - TOX_ENV=py38-django3.0
+  - TOX_ENV=py39-django3.0
 
 matrix:
   fast_finish: true
