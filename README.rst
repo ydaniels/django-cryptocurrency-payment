@@ -11,9 +11,9 @@ Django Cryptocurrency Payment
 .. image:: https://codecov.io/gh/ydaniels/django-cryptocurrency-payment/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/ydaniels/django-cryptocurrency-payment
 
-.. image:: https://img.shields.io/badge/python-2.7%7C3.5%7C3.6%7C3.7%7C3.8-blue
+.. image:: https://img.shields.io/badge/python-2.7%7C3.5%7C3.6%7C3.7%7C3.8%7C3.9%7C3.10-blue
    :alt: PyPI - Python Version
-.. image:: https://img.shields.io/badge/django-1.11%7C2.0%7C2.1%7C2.2%7C3.0-blue
+.. image:: https://img.shields.io/badge/django-1.11%7C2.0%7C2.1%7C2.2%7C3.0%7C4.0-blue
    :alt: Django Version
 
 Simple and flexible pluggable cryptocurrency payment app for django. Coins are spendable and reflect on HD wallet like Electrum
@@ -55,6 +55,15 @@ Add it to your `INSTALLED_APPS`:
             "IGNORE_CONFIRMED_BALANCE_WITHOUT_SAVED_HASH_MINS": 20,
             "BALANCE_CONFIRMATION_NUM": 1,
             "ALLOW_ANONYMOUS_PAYMENT": True,
+            "DERIVATION_PATH": "m/0", #please use deriavation path from your wallet
+            "ADDRESS_TYPE": "p2wpkh" #specify address type you want to generate p2pkh p2sh p2wpkh p2wsh p2wpkh_in_p2sh
+        },
+        "LITECOIN": {
+        "CODE": "LTC",
+              ..
+              ..
+              ..
+              ..
         }
      }
 
