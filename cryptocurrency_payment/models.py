@@ -9,6 +9,11 @@ from django.contrib.contenttypes.models import ContentType
 from cryptocurrency_payment.app_settings import get_backend_config, get_backend_obj
 
 
+def get_new_address(backend, index, address_type, derivation_path):
+    backend.wallet.clean_derivation()
+    backend.wallet.from_path("{}/{}".format(derivation_path, str(index)))
+    return backend.wallet.dumps()['addresses'][address_type.lower()]
+
 def create_child_payment(payment, fiat_amount):
     """
     Create a child payment from a particular payment. A child payment can be created for a particular underpaid amount
@@ -79,7 +84,11 @@ def create_new_payment(
         address_generated_count = (
             address_index or CryptoCurrencyPayment.get_address_used_count(crypto)
         )
-        address = backend_obj.generate_new_address(index=address_generated_count)
+        get_backend_config(crypto, key="CODE")
+        ADDRESS_TYPE = get_backend_config(crypto, key="ADDRESS_TYPE")
+        DEVRIVATION_PATH = get_backend_config(crypto, key="DEVRIVATION_PATH")
+        address = get_new_address(backend=backend_obj, index=address_generated_count, address_type=ADDRESS_TYPE, derivation_path=DEVRIVATION_PATH)
+
     payment = CryptoCurrencyPayment(
         crypto=crypto,
         crypto_code=crypto_code,

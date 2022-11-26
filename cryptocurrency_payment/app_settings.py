@@ -1,5 +1,6 @@
 import importlib
 from django.conf import settings
+from hdwallet import HDWallet
 
 
 def get_settings():
@@ -27,4 +28,8 @@ def get_backend_obj(crypto):
     Class = crypto_backend.split(".")[-1]
     module = importlib.import_module(module, Class)
     Backend = getattr(module, Class)
-    return Backend(get_backend_config(crypto, key="MASTER_PUBLIC_KEY"))
+    wallet = HDWallet(symbol=crypto.upper())
+    wallet.from_xpublic_key(xpublic_key=get_backend_config(crypto, key="MASTER_PUBLIC_KEY"), strict=False)
+    b = Backend(get_backend_config(crypto, key="MASTER_PUBLIC_KEY"))
+    b.wallet = wallet
+    return b
