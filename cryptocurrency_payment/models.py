@@ -86,7 +86,7 @@ def create_new_payment(
         )
         get_backend_config(crypto, key="CODE")
         ADDRESS_TYPE = get_backend_config(crypto, key="ADDRESS_TYPE")
-        DEVRIVATION_PATH = get_backend_config(crypto, key="DEVRIVATION_PATH")
+        DEVRIVATION_PATH = get_backend_config(crypto, key="DERIVATION_PATH")
         address = get_new_address(backend=backend_obj, index=address_generated_count, address_type=ADDRESS_TYPE, derivation_path=DEVRIVATION_PATH)
 
     payment = CryptoCurrencyPayment(
