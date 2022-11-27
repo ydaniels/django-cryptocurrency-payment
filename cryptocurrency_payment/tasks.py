@@ -143,7 +143,7 @@ class CryptoCurrencyPaymentTask:
             minutes=self.refresh_prices_every_mins
         )
         payments = CryptoCurrencyPayment.objects.filter(
-            status=CryptoCurrencyPayment.PAYMENT_NEW, updated_at__lte=leastupdate_time
+            status__in=[CryptoCurrencyPayment.PAYMENT_NEW, CryptoCurrencyPayment.PAYMENT_WAIT], updated_at__lte=leastupdate_time
         )
         for payment in payments:
             amount = self.backend_obj.convert_from_fiat(
