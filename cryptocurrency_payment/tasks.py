@@ -7,7 +7,7 @@ from cryptocurrency_payment.app_settings import get_active_backends, get_backend
 
 def update_payment_status():
     """
-    Run this as a task periodically to check update for new payment and current processing payment on the blockchain
+    Run this as a task periodically to check update for new or waiting payment and current processing payment on the blockchain
     :return:
     """
     backends = get_active_backends()
@@ -18,7 +18,7 @@ def update_payment_status():
 
 def cancel_unpaid_payment():
     """
-    Run this as a task to cancel payment that have stayed in new for too long
+    Run this as a task to cancel payment that have stayed in new or waiting for too long
     :return:
     """
     backends = get_active_backends()
@@ -81,6 +81,7 @@ class CryptoCurrencyPaymentTask:
             status__in=[
                 CryptoCurrencyPayment.PAYMENT_NEW,
                 CryptoCurrencyPayment.PAYMENT_PROCESSING,
+                CryptoCurrencyPayment.PAYMENT_WAIT
             ],
             created_at__gte=yesterday_time,
         ).all()
@@ -125,7 +126,7 @@ class CryptoCurrencyPaymentTask:
         """
         yesterday_time = timezone.now() - timedelta(hours=self.unpaid_payment_hrs)
         payments = CryptoCurrencyPayment.objects.filter(
-            status__in=[CryptoCurrencyPayment.PAYMENT_NEW],
+            status__in=[CryptoCurrencyPayment.PAYMENT_NEW, CryptoCurrencyPayment.PAYMENT_WAIT],
             created_at__lte=yesterday_time,
         )
         for payment in payments:

@@ -119,12 +119,12 @@ class CryptoCurrencyPayment(models.Model):
     PAYMENT_PAID = "paid"
     PAYMENT_CANCELLED = "cancelled"
     PAYMENT_NEW = "new"
-    PAYMENT_WAIT = "wait"
+    PAYMENT_WAIT = "waiting"
     PAYMENT_PROCESSING = "processing"
 
     TRANSACTION_STATUS = (
         (PAYMENT_NEW, "New"),
-        (PAYMENT_WAIT, "Waiting For Payment"),
+        (PAYMENT_WAIT, "Waiting"),
         (PAYMENT_PAID, "Paid"),
         (PAYMENT_CANCELLED, "Cancelled"),
         (PAYMENT_PROCESSING, "Processing"),
