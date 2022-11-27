@@ -109,6 +109,9 @@ class CryptoCurrencyPaymentTask:
                     payment.child_payment = create_child_payment(payment, fiat_value)
                 payment.status = payment.PAYMENT_PAID
                 payment.paid_crypto_amount = value
+            elif status == self.backend_obj.NO_HASH_ADDRESS_BALANCE:
+                payment.status = payment.PAYMENT_WAIT
+                payment.save() #no payment found yet
             else:
                 # unknown error occured cancel payment
                 payment.status = payment.PAYMENT_CANCELLED
