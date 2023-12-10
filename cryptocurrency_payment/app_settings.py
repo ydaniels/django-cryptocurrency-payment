@@ -28,8 +28,9 @@ def get_backend_obj(crypto):
     Class = crypto_backend.split(".")[-1]
     module = importlib.import_module(module, Class)
     Backend = getattr(module, Class)
-    wallet = HDWallet(symbol=get_backend_config(crypto=crypto, key="CODE").upper())
+    symbol = get_backend_config(crypto=crypto, key="CODE").upper()
+    wallet = HDWallet(symbol=symbol)
     wallet.from_xpublic_key(xpublic_key=get_backend_config(crypto, key="MASTER_PUBLIC_KEY"), strict=False)
-    b = Backend(get_backend_config(crypto, key="MASTER_PUBLIC_KEY"))
+    b = Backend(get_backend_config(crypto, key="MASTER_PUBLIC_KEY"), symbol)
     b.wallet = wallet
     return b
